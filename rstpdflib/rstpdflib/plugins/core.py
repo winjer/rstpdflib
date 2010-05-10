@@ -18,7 +18,8 @@ class CorePlugin(Plugin):
         settings['use_latex_toc'] = True
         settings['use_latex_docinfo'] = True
         stylesheet.append(r"\usepackage{chngcntr}")
-        stylesheet.append(r"\counterwithout{figure}{chapter}")
+        #stylesheet.append(r"\counterwithout{figure}")
+        #stylesheet.append(r"\counterwithout{figure}{chapter}")
         if 'titlepage' in core and core.as_bool('titlepage'):
             stylesheet.append(r"\titlepage")
         if core['ae']:

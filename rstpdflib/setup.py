@@ -7,7 +7,7 @@ version = "1.0"
 setup(name="rstpdflib",
     version = version,
     description="Convert restructured text to PDF, with styles",
-    long_description = "README.rst",
+    long_description = open("README.rst").read(),
     author="Doug Winter",
     author_email="doug@isotoma.com",
     packages = find_packages(exclude=['ez_setup']),
