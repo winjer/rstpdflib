@@ -16,7 +16,7 @@ setup(name="rstpdflib.plugins.isotoma",
         '': ['README.rst'],
         'rstpdflib.plugins.isotoma': ['templates/*.ini', 'templates/*.png'],
     },
-    namespace_packages = ['rstpdflib', 'plugins'],
+    namespace_packages = ['rstpdflib', 'rstpdflib.plugins'],
     include_package_data = True,
     zip_safe = False,
     install_requires = [

@@ -1,15 +1,22 @@
 #! /usr/bin/env python
 
-from distutils.core import setup
+from setuptools import setup, find_packages
 
-setup(name="rst2pdf",
-    version="1.0",
+version = "1.0"
+
+setup(name="rstpdflib",
+    version = version,
     description="Convert restructured text to PDF, with styles",
+    long_description = "README.rst",
     author="Doug Winter",
     author_email="doug@isotoma.com",
-    packages=['rstpdflib', 'rstpdflib.scripts', 'rstpdflib.plugins'],
+    packages = find_packages(exclude=['ez_setup']),
+    package_data = {
+        '': ['README.rst'],
+    },
+    include_package_data = False,
+    zip_safe = False,
     scripts=['bin/rst2pdf'],
-    package_data={'rstpdflib': ['templates/*.ini', 'templates/*.png', 'templates/*.pdf']},
 )
 
 
