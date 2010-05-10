@@ -13,6 +13,7 @@ setup(name="rstpdflib",
     packages = find_packages(exclude=['ez_setup']),
     package_data = {
         '': ['README.rst'],
+        'rstpdflib': ['templates/example.ini'],
     },
     include_package_data = False,
     zip_safe = False,
