@@ -1,11 +1,13 @@
 
 import os
 from configobj import ConfigObj
-from rstpdflib import registry
 import template
+from twisted.plugin import getPlugins
+from irstpdflib import IProcessPlugin
+import plugins
 
 class DocumentConfig(object):
-    
+
     def __init__(self, filename, tpt=None):
         self.document = filename
         if tpt is not None:
@@ -13,10 +15,10 @@ class DocumentConfig(object):
         else:
             self.conf = self.read()
         self.setdefaults()
-        
+
     def setdefaults(self):
         self.conf['DEFAULT'] = {}
-        self.conf['DEFAULT']['templatedir'] = template.templatedir
+        self.conf['DEFAULT']['templatedir'] = template.templatedirs
 
     @property
     def filename(self):
@@ -30,7 +32,7 @@ class DocumentConfig(object):
         del self.conf['DEFAULT']
         self.conf.write(open(self.filename, "w"))
         self.setdefaults()
-        
+
     def _read(self, filename):
         return ConfigObj(open(filename, "r"), interpolation="template")
 
@@ -39,9 +41,9 @@ class DocumentConfig(object):
             return self._read(self.filename)
         else:
             raise IOError("No configuration file found, you should initialise this document first")
-        
+
     def template(self, template):
         conf = ConfigObj(interpolation="template")
-        for plugin in registry.registry:
+        for plugin in getPlugins(IProcessPlugin, plugins):
             plugin.template(template.conf, conf)
         return conf

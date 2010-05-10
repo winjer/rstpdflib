@@ -1,1 +1,2 @@
 include rstpdflib/templates/example.ini
+include README.rst

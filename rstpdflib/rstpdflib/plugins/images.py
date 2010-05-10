@@ -1,11 +1,11 @@
 
 import os
 import subprocess
-from rstpdflib.plugin import Plugin
+from rstpdflib.plugin import ProcessPluginBase
 from StringIO import StringIO
 
-class Images(Plugin):
-    
+class Images(ProcessPluginBase):
+
     def make(self, filename):
         if filename.endswith(".pdf"):
             basename = filename[:-4]
@@ -13,7 +13,7 @@ class Images(Plugin):
                 command = "inkscape --export-pdf=%s %s" %(filename, basename + ".svg")
                 print command
                 subprocess.call(command, shell=True)
-    
+
     def preprocess(self, conf, stream):
         out = StringIO()
         for l in stream:
@@ -23,4 +23,3 @@ class Images(Plugin):
                 self.make(filename)
         return StringIO(out.getvalue())
 
-register = Images.register

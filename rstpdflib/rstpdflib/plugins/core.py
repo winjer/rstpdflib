@@ -1,9 +1,9 @@
 
 from StringIO import StringIO
-from rstpdflib.plugin import Plugin
+from rstpdflib.plugin import ProcessPluginBase
 
-class CorePlugin(Plugin):
-            
+class CorePlugin(ProcessPluginBase):
+
     def prepare(self, conf, settings, stylesheet):
         core = conf['core']
         docoptions = []
@@ -41,11 +41,11 @@ class CorePlugin(Plugin):
         if 'rhead' in core:
             stylesheet.append(r"\rhead{%s}" % core['rhead'])
         return settings, stylesheet
-    
+
     def preprocess(self, conf, stream):
         out = StringIO()
         self.svninfo = None
-        for l in stream:            
+        for l in stream:
             out.write(l)
             if l.startswith('.. rst2pdf'):
                 if conf['core'].as_bool('section-numbering'):
@@ -55,7 +55,7 @@ class CorePlugin(Plugin):
                 if l.startswith(".. $Id"):
                     self.svninfo = l[3:]
         return StringIO(out.getvalue())
-    
+
     def postprocess(self, conf, stream):
         out = StringIO()
         for l in stream:
@@ -64,13 +64,13 @@ class CorePlugin(Plugin):
                     print >>out, "\svnInfo %s" % self.svninfo
             out.write(l)
         return StringIO(out.getvalue())
-    
+
     def template(self, inconf, outconf):
         outconf['core'] = {}
         ic = inconf['core']
         oc = outconf['core']
         for term in ('parskip', 'tocdepth', 'secnumdepth', 'ae', 'fontsize', 'papersize', 'sided', 'docoptions', 'documentclass',
-                     'lhead', 'rhead', 'section-numbering', 'font-encoding', 'use-latex-toc', 'use-latex-docinfo', 'issuer', 'titlepage', 
+                     'lhead', 'rhead', 'section-numbering', 'font-encoding', 'use-latex-toc', 'use-latex-docinfo', 'issuer', 'titlepage',
                      'titlehead'):
             if term in ic:
                 oc[term] = ic[term]
@@ -84,5 +84,4 @@ class CorePlugin(Plugin):
             issuer = [x.strip() for x in raw_input("Issuer [%s]?\n" % ", ".join(ic['issuer'])).split(",")]
             oc['issuer'] = issuer if issuer[0] else ic['issuer']
         return outconf
-        
-register = CorePlugin.register
+

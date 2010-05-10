@@ -1,0 +1,7 @@
+include rstpdflib/plugins/isotoma/templates/logo.pdf
+include rstpdflib/plugins/isotoma/templates/logo.png
+include rstpdflib/plugins/isotoma/templates/logo.svg
+include rstpdflib/plugins/isotoma/templates/paper.ini
+include rstpdflib/plugins/isotoma/templates/report.ini
+include README.rst
+
